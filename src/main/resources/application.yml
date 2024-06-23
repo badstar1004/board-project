@@ -1,0 +1,56 @@
+server:
+  port: 8081
+
+debug: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    com.board.boardproject: debug
+    org.springframework.web.servlet: debug    # request, response ?? ??
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+
+spring:
+  application:
+    name: board-project
+  datasource:   # db ??
+    url: jdbc:mysql://localhost:3306/board
+    username: uno
+    password: thisisTESTpw!@#
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    defer-datasource-initialization: true   # test ? ?????? ???? ?? ? ?? -> ?? ??? ??
+    hibernate:
+      ddl-auto: create    # ???? ?? ???? ?? ??
+#    open-in-view: false
+    show-sql: true    # sql ?? ???
+    properties:   # hibernate? ???? ?? ??? ??
+      hibernate.format_sql: true
+      hibernate.default_batch_fetch_size: 100   # 10?? ?? (n + 1) ??? in ?? ????? ? ?? ?????? ???
+  h2:
+    console:
+      enabled: true
+  sql:
+    init:
+      mode: always
+#  thymeleaf.cache: false
+#  data:
+#    rest:
+#      base-path: /api
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: testdb
+#  datasource:
+#    url: jdbc:h2:mem:board;mode=mysql
+#    driver-class-name: org.h2.Driver
+#  sql:
+#    init:
+#      mode: always
