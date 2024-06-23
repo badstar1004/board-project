@@ -22,6 +22,10 @@ spring:
     username: uno
     password: thisisTESTpw!@#
     driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:h2:mem:testdb;mode=mysql
+#    driver-class-name: org.h2.Driver
+#    username: sa
+
   jpa:
     defer-datasource-initialization: true   # test ? ?????? ???? ?? ? ?? -> ?? ??? ??
     hibernate:
@@ -31,9 +35,9 @@ spring:
     properties:   # hibernate? ???? ?? ??? ??
       hibernate.format_sql: true
       hibernate.default_batch_fetch_size: 100   # 10?? ?? (n + 1) ??? in ?? ????? ? ?? ?????? ???
-  h2:
-    console:
-      enabled: true
+#  h2:
+#    console:
+#      enabled: false
   sql:
     init:
       mode: always
