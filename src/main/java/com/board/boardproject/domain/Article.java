@@ -3,7 +3,6 @@ package com.board.boardproject.domain;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -11,7 +10,6 @@ import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -19,11 +17,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.ToString.Exclude;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
 @ToString
@@ -33,9 +26,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
     @Index(columnList = "createdAt"),
     @Index(columnList = "createdBy")
 })
-@EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Article {
+public class Article extends AuditingFields {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,21 +49,6 @@ public class Article {
     @Exclude        // Article 에서 toString() 끊어주는게 좋음
     private final Set<ArticleComment> articleCommentSet = new HashSet<>();
 
-
-    // 자동설정 -> jpa auditing -> 실시간으로 데이터를 넣어줌
-    @CreatedDate
-    private LocalDateTime createdAt;     // 생성일시
-
-    @CreatedBy
-    @Column(length = 100)
-    private String createdBy;            // 생성자
-
-    @LastModifiedDate
-    private LocalDateTime updatedAt;     // 수정일시
-
-    @LastModifiedBy
-    @Column(length = 100)
-    private String updatedBy;            // 수정자
 
 
     // Hibernate 구현체를 사용하는 경우 기본 생성자를 가지고 있어야함
